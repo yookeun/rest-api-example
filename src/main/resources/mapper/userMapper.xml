@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="userMapper">
+
+    <select id="select" resultType="userDto" parameterType="String">
+        SELECT id, username, password, isadmin
+        FROM test_user
+        WHERE 1 = 1
+        AND username = #{username}
+    </select>
+
+</mapper>

@@ -1,5 +1,6 @@
 package example.spring.config;
 
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.Filter;
@@ -11,28 +12,20 @@ import javax.servlet.ServletException;
  */
 public class WebInit extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
-    protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[0];
-    }
+    protected Class<?>[] getRootConfigClasses() { return null; }
 
     @Override
-    public void onStartup(ServletContext servletContext) throws ServletException {
-        super.onStartup(servletContext);
-    }
+    public void onStartup(ServletContext servletContext) throws ServletException {super.onStartup(servletContext);}
 
     @Override
-    protected String getServletName() {
-        return super.getServletName();
-    }
-
-    @Override
-    protected Class<?>[] getServletConfigClasses() {
-        return new Class<?>[0];
-    }
+    protected Class<?>[] getServletConfigClasses() { return new Class<?>[]{WebConfig.class }; }
 
     @Override
     protected Filter[] getServletFilters() {
-        return super.getServletFilters();
+        CharacterEncodingFilter encodingFilter = new CharacterEncodingFilter();
+        encodingFilter.setEncoding("UTF-8");
+        encodingFilter.setForceEncoding(true);
+        return new Filter[]{encodingFilter};
     }
 
     @Override
