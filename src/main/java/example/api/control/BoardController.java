@@ -4,6 +4,9 @@ import example.api.dto.BoardDto;
 import example.api.service.BoardService;
 import example.common.ResultCodeType;
 import example.common.ResultJson;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +22,7 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
+    @ApiOperation(value = "전체 게시판 조회")
     @RequestMapping(value = "/board", method = RequestMethod.GET)
     public ResultJson selectListBoard() {
         ResultJson resultJson = new ResultJson();
@@ -30,6 +34,10 @@ public class BoardController {
         return resultJson;
     }
 
+    @ApiOperation(value = "해당 게시판 조회")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "게시판 고유키", required = true, dataType = "string", paramType = "path", defaultValue = ""),
+    })
     @RequestMapping(value = "/board/{id}", method = RequestMethod.GET)
     public ResultJson selectOneBoard(@PathVariable("id") Integer id) {
         ResultJson resultJson = new ResultJson();
@@ -39,6 +47,11 @@ public class BoardController {
         return resultJson;
     }
 
+    @ApiOperation(value = "게시판 등록")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "title", value = "제목", required = true, dataType = "string", paramType = "query", defaultValue = ""),
+            @ApiImplicitParam(name = "content", value = "내용", required = true, dataType = "string", paramType = "query", defaultValue = ""),
+    })
     @RequestMapping(value = "/board", method = RequestMethod.POST)
     public ResultJson insertBoard(
             @RequestParam(value = "title", required = true) String title,

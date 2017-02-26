@@ -20,6 +20,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
                                         Authentication authentication) throws IOException, ServletException {
 
         response.setStatus(HttpServletResponse.SC_OK);
-        response.sendRedirect("/");
+        response.sendRedirect("swagger-ui.html");
     }
 }
