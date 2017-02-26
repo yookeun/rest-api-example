@@ -2,6 +2,7 @@ package example.api.control;
 
 import example.api.dto.BoardDto;
 import example.api.service.BoardService;
+import example.common.ResultCodeType;
 import example.common.ResultJson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,8 @@ public class BoardController {
         List<BoardDto> list = boardService.selectListBoard();
         resultJson.setItems(list);
         resultJson.setTotal(list.size());
+        resultJson.setResultCode(ResultCodeType.SUCCESS.getCode());
+        resultJson.setMsg(ResultCodeType.SUCCESS.getMsg());
         return resultJson;
     }
 
@@ -31,6 +34,8 @@ public class BoardController {
     public ResultJson selectOneBoard(@PathVariable("id") Integer id) {
         ResultJson resultJson = new ResultJson();
         resultJson.setObject(boardService.selectOneBoard(id));
+        resultJson.setResultCode(ResultCodeType.SUCCESS.getCode());
+        resultJson.setMsg(ResultCodeType.SUCCESS.getMsg());
         return resultJson;
     }
 
@@ -40,7 +45,13 @@ public class BoardController {
             @RequestParam(value = "content", required = true) String content){
 
         ResultJson resultJson = new ResultJson();
-        resultJson.setResultCode(0); //성공
+        BoardDto boardDto = new BoardDto();
+        boardDto.setTitle(title);
+        boardDto.setContent(content);
+        boardService.insertBoard(boardDto);
+
+        resultJson.setResultCode(ResultCodeType.SUCCESS.getCode());
+        resultJson.setMsg(ResultCodeType.SUCCESS.getMsg());
         return resultJson;
     }
 }
